@@ -28,11 +28,11 @@ public class Config {
 
     @Primary
     @Bean
-    public LocalContainerEntityManagerFactoryBean db1EntityManager() {
+    public LocalContainerEntityManagerFactoryBean dbEntityManager() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dbDataSource());
         em.setJpaProperties(additionalJpaProperties());
-        em.setPackagesToScan("rs.ac.metropolitan.isum.database.newisum.entity");
+        em.setPackagesToScan("com.fastfoodsm.fastfood.model");
         em.setPersistenceUnitName("db1EntityManager");
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
@@ -58,7 +58,7 @@ public class Config {
         JpaTransactionManager transactionManager
                 = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(
-                db1EntityManager().getObject());
+                dbEntityManager().getObject());
         return transactionManager;
     }
 }
