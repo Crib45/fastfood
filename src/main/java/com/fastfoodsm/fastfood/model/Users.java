@@ -1,35 +1,92 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.fastfoodsm.fastfood.model;
 
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.sql.Timestamp;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
+/**
+ *
+ * @author Stefan
+ */
 @Entity
-public class Users {
-    private int id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private Integer phone;
-    private String username;
-    private String password;
-    private String role;
-    private Timestamp createdAt;
+@Table(name = "users")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u")})
+public class Users implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    @Size(max = 255)
+    @Column(name = "first_name")
+    private String firstName;
+    @Size(max = 255)
+    @Column(name = "last_name")
+    private String lastName;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 255)
+    @Column(name = "email")
+    private String email;
+    @Column(name = "phone")
+    private Long phone;
+    @Size(max = 255)
+    @Column(name = "username")
+    private String username;
+    @Size(max = 255)
+    @Column(name = "password")
+    private String password;
+    @Size(max = 255)
+    @Column(name = "role")
+    private String role;
+    @Column(name = "created_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+    @OneToMany(mappedBy = "userId")
+    private List<Favorites> favoritesList;
+    @OneToMany(mappedBy = "ownerId")
+    private List<Restaurant> restaurantList;
+    @OneToMany(mappedBy = "userId")
+    private List<OrderEntity> orderEntityList;
+
+    public Users() {
     }
 
-    public void setId(int id) {
+    public Users(Integer id) {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "first_name", nullable = true, length = 255)
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -38,8 +95,6 @@ public class Users {
         this.firstName = firstName;
     }
 
-    @Basic
-    @Column(name = "last_name", nullable = true, length = 255)
     public String getLastName() {
         return lastName;
     }
@@ -48,8 +103,6 @@ public class Users {
         this.lastName = lastName;
     }
 
-    @Basic
-    @Column(name = "email", nullable = true, length = 255)
     public String getEmail() {
         return email;
     }
@@ -58,18 +111,14 @@ public class Users {
         this.email = email;
     }
 
-    @Basic
-    @Column(name = "phone", nullable = true, precision = 0)
-    public Integer getPhone() {
+    public Long getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(Long phone) {
         this.phone = phone;
     }
 
-    @Basic
-    @Column(name = "username", nullable = true, length = 255)
     public String getUsername() {
         return username;
     }
@@ -78,8 +127,6 @@ public class Users {
         this.username = username;
     }
 
-    @Basic
-    @Column(name = "password", nullable = true, length = 255)
     public String getPassword() {
         return password;
     }
@@ -88,8 +135,6 @@ public class Users {
         this.password = password;
     }
 
-    @Basic
-    @Column(name = "role", nullable = true, length = 255)
     public String getRole() {
         return role;
     }
@@ -98,47 +143,64 @@ public class Users {
         this.role = role;
     }
 
-    @Basic
-    @Column(name = "created_at", nullable = true)
-    public Timestamp getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    @XmlTransient
+    public List<Favorites> getFavoritesList() {
+        return favoritesList;
+    }
 
-        Users users = (Users) o;
+    public void setFavoritesList(List<Favorites> favoritesList) {
+        this.favoritesList = favoritesList;
+    }
 
-        if (id != users.id) return false;
-        if (firstName != null ? !firstName.equals(users.firstName) : users.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(users.lastName) : users.lastName != null) return false;
-        if (email != null ? !email.equals(users.email) : users.email != null) return false;
-        if (phone != null ? !phone.equals(users.phone) : users.phone != null) return false;
-        if (username != null ? !username.equals(users.username) : users.username != null) return false;
-        if (password != null ? !password.equals(users.password) : users.password != null) return false;
-        if (role != null ? !role.equals(users.role) : users.role != null) return false;
-        if (createdAt != null ? !createdAt.equals(users.createdAt) : users.createdAt != null) return false;
+    @XmlTransient
+    public List<Restaurant> getRestaurantList() {
+        return restaurantList;
+    }
 
-        return true;
+    public void setRestaurantList(List<Restaurant> restaurantList) {
+        this.restaurantList = restaurantList;
+    }
+
+    @XmlTransient
+    public List<OrderEntity> getOrderEntityList() {
+        return orderEntityList;
+    }
+
+    public void setOrderEntityList(List<OrderEntity> orderEntityList) {
+        this.orderEntityList = orderEntityList;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (phone != null ? phone.hashCode() : 0);
-        result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (role != null ? role.hashCode() : 0);
-        result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Users)) {
+            return false;
+        }
+        Users other = (Users) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.fastfoodsm.fastfood.model.Users[ id=" + id + " ]";
+    }
+    
 }

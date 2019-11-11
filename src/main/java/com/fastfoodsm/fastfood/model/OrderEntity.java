@@ -6,6 +6,8 @@
 package com.fastfoodsm.fastfood.model;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,19 +18,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Stefan
  */
 @Entity
-@Table(name = "food_order")
+@Table(name = "order")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "FoodOrder.findAll", query = "SELECT f FROM FoodOrder f")})
-public class FoodOrder implements Serializable {
+    @NamedQuery(name = "OrderEntity.findAll", query = "SELECT o FROM OrderEntity o")})
+public class OrderEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -36,17 +42,22 @@ public class FoodOrder implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "food_id", referencedColumnName = "id")
+    @Column(name = "date")
+    @Temporal(TemporalType.DATE)
+    private Date date;
+    @OneToMany(mappedBy = "orderId")
+    private List<FoodOrder> foodOrderList;
+    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
     @ManyToOne
-    private Food foodId;
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    private Restaurant restaurantId;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
-    private OrderEntity orderId;
+    private Users userId;
 
-    public FoodOrder() {
+    public OrderEntity() {
     }
 
-    public FoodOrder(Integer id) {
+    public OrderEntity(Integer id) {
         this.id = id;
     }
 
@@ -58,20 +69,37 @@ public class FoodOrder implements Serializable {
         this.id = id;
     }
 
-    public Food getFoodId() {
-        return foodId;
+    public Date getDate() {
+        return date;
     }
 
-    public void setFoodId(Food foodId) {
-        this.foodId = foodId;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public OrderEntity getOrderId() {
-        return orderId;
+    @XmlTransient
+    public List<FoodOrder> getFoodOrderList() {
+        return foodOrderList;
     }
 
-    public void setOrderId(OrderEntity orderId) {
-        this.orderId = orderId;
+    public void setFoodOrderList(List<FoodOrder> foodOrderList) {
+        this.foodOrderList = foodOrderList;
+    }
+
+    public Restaurant getRestaurantId() {
+        return restaurantId;
+    }
+
+    public void setRestaurantId(Restaurant restaurantId) {
+        this.restaurantId = restaurantId;
+    }
+
+    public Users getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Users userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -84,10 +112,10 @@ public class FoodOrder implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof FoodOrder)) {
+        if (!(object instanceof OrderEntity)) {
             return false;
         }
-        FoodOrder other = (FoodOrder) object;
+        OrderEntity other = (OrderEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -96,7 +124,7 @@ public class FoodOrder implements Serializable {
 
     @Override
     public String toString() {
-        return "com.fastfoodsm.fastfood.model.FoodOrder[ id=" + id + " ]";
+        return "com.fastfoodsm.fastfood.model.OrderEntity[ id=" + id + " ]";
     }
     
 }

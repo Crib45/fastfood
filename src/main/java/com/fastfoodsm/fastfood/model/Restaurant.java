@@ -1,31 +1,90 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.fastfoodsm.fastfood.model;
 
-import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
+/**
+ *
+ * @author Stefan
+ */
 @Entity
-public class Restaurant {
-    private int id;
-    private String name;
-    private String location;
-    private Integer phone;
-    private String description;
-    private String hoursStart;
-    private String hoursEnd;
-    private String createdAt;
-    private Users usersByOwnerId;
+@Table(name = "restaurant")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Restaurant.findAll", query = "SELECT r FROM Restaurant r")})
+public class Restaurant implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    @Size(max = 255)
+    @Column(name = "name")
+    private String name;
+    @Size(max = 255)
+    @Column(name = "location")
+    private String location;
+    @Column(name = "phone")
+    private Long phone;
+    @Size(max = 255)
+    @Column(name = "description")
+    private String description;
+    @Size(max = 255)
+    @Column(name = "hours_start")
+    private String hoursStart;
+    @Size(max = 255)
+    @Column(name = "hours_end")
+    private String hoursEnd;
+    @Size(max = 255)
+    @Column(name = "created at")
+    private String createdAt;
+    @OneToMany(mappedBy = "restaurantId")
+    private List<Favorites> favoritesList;
+    @JoinColumn(name = "owner_id", referencedColumnName = "id")
+    @ManyToOne
+    private Users ownerId;
+    @OneToMany(mappedBy = "restaurantId")
+    private List<Category> categoryList;
+    @OneToMany(mappedBy = "restaurantId")
+    private List<OrderEntity> orderEntityList;
+
+    public Restaurant() {
     }
 
-    public void setId(int id) {
+    public Restaurant(Integer id) {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name", nullable = true, length = 255)
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -34,8 +93,6 @@ public class Restaurant {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "location", nullable = true, length = 255)
     public String getLocation() {
         return location;
     }
@@ -44,18 +101,14 @@ public class Restaurant {
         this.location = location;
     }
 
-    @Basic
-    @Column(name = "phone", nullable = true, precision = 0)
-    public Integer getPhone() {
+    public Long getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(Long phone) {
         this.phone = phone;
     }
 
-    @Basic
-    @Column(name = "description", nullable = true, length = 255)
     public String getDescription() {
         return description;
     }
@@ -64,8 +117,6 @@ public class Restaurant {
         this.description = description;
     }
 
-    @Basic
-    @Column(name = "hours_start", nullable = true, length = 255)
     public String getHoursStart() {
         return hoursStart;
     }
@@ -74,8 +125,6 @@ public class Restaurant {
         this.hoursStart = hoursStart;
     }
 
-    @Basic
-    @Column(name = "hours_end", nullable = true, length = 255)
     public String getHoursEnd() {
         return hoursEnd;
     }
@@ -84,8 +133,6 @@ public class Restaurant {
         this.hoursEnd = hoursEnd;
     }
 
-    @Basic
-    @Column(name = "created at", nullable = true, length = 255)
     public String getCreatedAt() {
         return createdAt;
     }
@@ -94,45 +141,64 @@ public class Restaurant {
         this.createdAt = createdAt;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    @XmlTransient
+    public List<Favorites> getFavoritesList() {
+        return favoritesList;
+    }
 
-        Restaurant that = (Restaurant) o;
+    public void setFavoritesList(List<Favorites> favoritesList) {
+        this.favoritesList = favoritesList;
+    }
 
-        if (id != that.id) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (location != null ? !location.equals(that.location) : that.location != null) return false;
-        if (phone != null ? !phone.equals(that.phone) : that.phone != null) return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (hoursStart != null ? !hoursStart.equals(that.hoursStart) : that.hoursStart != null) return false;
-        if (hoursEnd != null ? !hoursEnd.equals(that.hoursEnd) : that.hoursEnd != null) return false;
-        if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
+    public Users getOwnerId() {
+        return ownerId;
+    }
 
-        return true;
+    public void setOwnerId(Users ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    @XmlTransient
+    public List<Category> getCategoryList() {
+        return categoryList;
+    }
+
+    public void setCategoryList(List<Category> categoryList) {
+        this.categoryList = categoryList;
+    }
+
+    @XmlTransient
+    public List<OrderEntity> getOrderEntityList() {
+        return orderEntityList;
+    }
+
+    public void setOrderEntityList(List<OrderEntity> orderEntityList) {
+        this.orderEntityList = orderEntityList;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (location != null ? location.hashCode() : 0);
-        result = 31 * result + (phone != null ? phone.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (hoursStart != null ? hoursStart.hashCode() : 0);
-        result = 31 * result + (hoursEnd != null ? hoursEnd.hashCode() : 0);
-        result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "owner_id", referencedColumnName = "id")
-    public Users getUsersByOwnerId() {
-        return usersByOwnerId;
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Restaurant)) {
+            return false;
+        }
+        Restaurant other = (Restaurant) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 
-    public void setUsersByOwnerId(Users usersByOwnerId) {
-        this.usersByOwnerId = usersByOwnerId;
+    @Override
+    public String toString() {
+        return "com.fastfoodsm.fastfood.model.Restaurant[ id=" + id + " ]";
     }
+    
 }

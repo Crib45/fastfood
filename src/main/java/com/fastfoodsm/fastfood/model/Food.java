@@ -1,30 +1,77 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.fastfoodsm.fastfood.model;
 
+import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
+/**
+ *
+ * @author Stefan
+ */
 @Entity
-public class Food {
-    private int id;
-    private String name;
-    private Integer price;
-    private String description;
-    private String image;
+@Table(name = "food")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Food.findAll", query = "SELECT f FROM Food f")})
+public class Food implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    @Size(max = 255)
+    @Column(name = "name")
+    private String name;
+    @Column(name = "price")
+    private Long price;
+    @Size(max = 255)
+    @Column(name = "description")
+    private String description;
+    @Size(max = 255)
+    @Column(name = "image")
+    private String image;
+    @OneToMany(mappedBy = "foodId")
+    private List<FoodOrder> foodOrderList;
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    @ManyToOne
+    private Category categoryId;
+
+    public Food() {
     }
 
-    public void setId(int id) {
+    public Food(Integer id) {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name", nullable = true, length = 255)
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -33,18 +80,14 @@ public class Food {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "price", nullable = true, precision = 0)
-    public Integer getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 
-    @Basic
-    @Column(name = "description", nullable = true, length = 255)
     public String getDescription() {
         return description;
     }
@@ -53,8 +96,6 @@ public class Food {
         this.description = description;
     }
 
-    @Basic
-    @Column(name = "image", nullable = true, length = 255)
     public String getImage() {
         return image;
     }
@@ -63,29 +104,46 @@ public class Food {
         this.image = image;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    @XmlTransient
+    public List<FoodOrder> getFoodOrderList() {
+        return foodOrderList;
+    }
 
-        Food food = (Food) o;
+    public void setFoodOrderList(List<FoodOrder> foodOrderList) {
+        this.foodOrderList = foodOrderList;
+    }
 
-        if (id != food.id) return false;
-        if (name != null ? !name.equals(food.name) : food.name != null) return false;
-        if (price != null ? !price.equals(food.price) : food.price != null) return false;
-        if (description != null ? !description.equals(food.description) : food.description != null) return false;
-        if (image != null ? !image.equals(food.image) : food.image != null) return false;
+    public Category getCategoryId() {
+        return categoryId;
+    }
 
-        return true;
+    public void setCategoryId(Category categoryId) {
+        this.categoryId = categoryId;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (image != null ? image.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Food)) {
+            return false;
+        }
+        Food other = (Food) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.fastfoodsm.fastfood.model.Food[ id=" + id + " ]";
+    }
+    
 }

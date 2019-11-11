@@ -1,27 +1,70 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.fastfoodsm.fastfood.model;
 
-import javax.persistence.*;
+import java.io.Serializable;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ *
+ * @author Stefan
+ */
 @Entity
-public class Favorites {
-    private int id;
-    private String notes;
-    private String createdAt;
-    private Restaurant restaurantByRestaurantId;
-    private Users usersByUserId;
+@Table(name = "favorites")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Favorites.findAll", query = "SELECT f FROM Favorites f")})
+public class Favorites implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    @Size(max = 255)
+    @Column(name = "notes")
+    private String notes;
+    @Size(max = 255)
+    @Column(name = "created at")
+    private String createdAt;
+    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
+    @ManyToOne
+    private Restaurant restaurantId;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne
+    private Users userId;
+
+    public Favorites() {
     }
 
-    public void setId(int id) {
+    public Favorites(Integer id) {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "notes", nullable = true, length = 255)
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getNotes() {
         return notes;
     }
@@ -30,8 +73,6 @@ public class Favorites {
         this.notes = notes;
     }
 
-    @Basic
-    @Column(name = "created at", nullable = true, length = 255)
     public String getCreatedAt() {
         return createdAt;
     }
@@ -40,45 +81,45 @@ public class Favorites {
         this.createdAt = createdAt;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public Restaurant getRestaurantId() {
+        return restaurantId;
+    }
 
-        Favorites favorites = (Favorites) o;
+    public void setRestaurantId(Restaurant restaurantId) {
+        this.restaurantId = restaurantId;
+    }
 
-        if (id != favorites.id) return false;
-        if (notes != null ? !notes.equals(favorites.notes) : favorites.notes != null) return false;
-        if (createdAt != null ? !createdAt.equals(favorites.createdAt) : favorites.createdAt != null) return false;
+    public Users getUserId() {
+        return userId;
+    }
 
-        return true;
+    public void setUserId(Users userId) {
+        this.userId = userId;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (notes != null ? notes.hashCode() : 0);
-        result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
-    public Restaurant getRestaurantByRestaurantId() {
-        return restaurantByRestaurantId;
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Favorites)) {
+            return false;
+        }
+        Favorites other = (Favorites) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 
-    public void setRestaurantByRestaurantId(Restaurant restaurantByRestaurantId) {
-        this.restaurantByRestaurantId = restaurantByRestaurantId;
+    @Override
+    public String toString() {
+        return "com.fastfoodsm.fastfood.model.Favorites[ id=" + id + " ]";
     }
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    public Users getUsersByUserId() {
-        return usersByUserId;
-    }
-
-    public void setUsersByUserId(Users usersByUserId) {
-        this.usersByUserId = usersByUserId;
-    }
+    
 }

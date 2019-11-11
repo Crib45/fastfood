@@ -1,25 +1,69 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.fastfoodsm.fastfood.model;
 
-import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
+/**
+ *
+ * @author Stefan
+ */
 @Entity
-public class Category {
-    private int id;
-    private String name;
-    private Restaurant restaurantByRestaurantId;
+@Table(name = "category")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")})
+public class Category implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    @Size(max = 255)
+    @Column(name = "name")
+    private String name;
+    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
+    @ManyToOne
+    private Restaurant restaurantId;
+    @OneToMany(mappedBy = "categoryId")
+    private List<Food> foodList;
+
+    public Category() {
     }
 
-    public void setId(int id) {
+    public Category(Integer id) {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name", nullable = true, length = 255)
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -28,33 +72,46 @@ public class Category {
         this.name = name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public Restaurant getRestaurantId() {
+        return restaurantId;
+    }
 
-        Category category = (Category) o;
+    public void setRestaurantId(Restaurant restaurantId) {
+        this.restaurantId = restaurantId;
+    }
 
-        if (id != category.id) return false;
-        if (name != null ? !name.equals(category.name) : category.name != null) return false;
+    @XmlTransient
+    public List<Food> getFoodList() {
+        return foodList;
+    }
 
-        return true;
+    public void setFoodList(List<Food> foodList) {
+        this.foodList = foodList;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
-    public Restaurant getRestaurantByRestaurantId() {
-        return restaurantByRestaurantId;
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Category)) {
+            return false;
+        }
+        Category other = (Category) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 
-    public void setRestaurantByRestaurantId(Restaurant restaurantByRestaurantId) {
-        this.restaurantByRestaurantId = restaurantByRestaurantId;
+    @Override
+    public String toString() {
+        return "com.fastfoodsm.fastfood.model.Category[ id=" + id + " ]";
     }
+    
 }
