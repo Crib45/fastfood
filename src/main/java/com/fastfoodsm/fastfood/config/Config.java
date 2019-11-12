@@ -33,7 +33,7 @@ public class Config {
         em.setDataSource(dbDataSource());
         em.setJpaProperties(additionalJpaProperties());
         em.setPackagesToScan("com.fastfoodsm.fastfood.model");
-        em.setPersistenceUnitName("db1EntityManager");
+        em.setPersistenceUnitName("dbEntityManager");
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         return em;
