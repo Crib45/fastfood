@@ -6,8 +6,8 @@
     <class>com.fastfoodsm.fastfood.model.Food</class>
     <class>com.fastfoodsm.fastfood.model.FoodOrder</class>
     <class>com.fastfoodsm.fastfood.model.Category</class>
-    <class>com.fastfoodsm.fastfood.model.Users</class>
-    <class>com.fastfoodsm.fastfood.model.OrderEntity</class>
+    <class>com.fastfoodsm.fastfood.model.User</class>
+    <class>com.fastfoodsm.fastfood.model.Order</class>
     <class>com.fastfoodsm.fastfood.model.Favorites</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/fastfooddb?zeroDateTimeBehavior=convertToNull"/>
