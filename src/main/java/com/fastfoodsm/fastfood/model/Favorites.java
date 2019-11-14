@@ -48,7 +48,7 @@ public class Favorites implements Serializable {
     private Restaurant restaurantId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
-    private Users userId;
+    private User userId;
 
     public Favorites() {
     }
@@ -89,11 +89,11 @@ public class Favorites implements Serializable {
         this.restaurantId = restaurantId;
     }
 
-    public Users getUserId() {
+    public User getUserId() {
         return userId;
     }
 
-    public void setUserId(Users userId) {
+    public void setUserId(User userId) {
         this.userId = userId;
     }
 

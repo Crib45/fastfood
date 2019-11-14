@@ -33,8 +33,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "order")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "OrderEntity.findAll", query = "SELECT o FROM OrderEntity o")})
-public class OrderEntity implements Serializable {
+    @NamedQuery(name = "OrderEntity.findAll", query = "SELECT o FROM Order o")})
+public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,12 +52,12 @@ public class OrderEntity implements Serializable {
     private Restaurant restaurantId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
-    private Users userId;
+    private User userId;
 
-    public OrderEntity() {
+    public Order() {
     }
 
-    public OrderEntity(Integer id) {
+    public Order(Integer id) {
         this.id = id;
     }
 
@@ -94,11 +94,11 @@ public class OrderEntity implements Serializable {
         this.restaurantId = restaurantId;
     }
 
-    public Users getUserId() {
+    public User getUserId() {
         return userId;
     }
 
-    public void setUserId(Users userId) {
+    public void setUserId(User userId) {
         this.userId = userId;
     }
 
@@ -112,10 +112,10 @@ public class OrderEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof OrderEntity)) {
+        if (!(object instanceof Order)) {
             return false;
         }
-        OrderEntity other = (OrderEntity) object;
+        Order other = (Order) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

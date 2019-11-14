@@ -64,11 +64,11 @@ public class Restaurant implements Serializable {
     private List<Favorites> favoritesList;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     @ManyToOne
-    private Users ownerId;
+    private User ownerId;
     @OneToMany(mappedBy = "restaurantId")
     private List<Category> categoryList;
     @OneToMany(mappedBy = "restaurantId")
-    private List<OrderEntity> orderEntityList;
+    private List<Order> orderList;
 
     public Restaurant() {
     }
@@ -150,11 +150,11 @@ public class Restaurant implements Serializable {
         this.favoritesList = favoritesList;
     }
 
-    public Users getOwnerId() {
+    public User getOwnerId() {
         return ownerId;
     }
 
-    public void setOwnerId(Users ownerId) {
+    public void setOwnerId(User ownerId) {
         this.ownerId = ownerId;
     }
 
@@ -168,12 +168,12 @@ public class Restaurant implements Serializable {
     }
 
     @XmlTransient
-    public List<OrderEntity> getOrderEntityList() {
-        return orderEntityList;
+    public List<Order> getOrderEntityList() {
+        return orderList;
     }
 
-    public void setOrderEntityList(List<OrderEntity> orderEntityList) {
-        this.orderEntityList = orderEntityList;
+    public void setOrderEntityList(List<Order> orderEntityList) {
+        this.orderList = orderEntityList;
     }
 
     @Override

@@ -70,7 +70,7 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "ownerId")
     private List<Restaurant> restaurantList;
     @OneToMany(mappedBy = "userId")
-    private List<OrderEntity> orderEntityList;
+    private List<Order> orderList;
 
     public User() {
     }
@@ -170,12 +170,12 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public List<OrderEntity> getOrderEntityList() {
-        return orderEntityList;
+    public List<Order> getOrderEntityList() {
+        return orderList;
     }
 
-    public void setOrderEntityList(List<OrderEntity> orderEntityList) {
-        this.orderEntityList = orderEntityList;
+    public void setOrderEntityList(List<Order> orderEntityList) {
+        this.orderList = orderEntityList;
     }
 
     @Override
