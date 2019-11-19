@@ -5,6 +5,8 @@
  */
 package com.fastfoodsm.fastfood.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -41,8 +43,8 @@ public class Restaurant implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Size(max = 255)
-    @Column(name = "name")
-    private String name;
+    @Column(name = "restaurantName")
+    private String restaurantName;
     @Size(max = 255)
     @Column(name = "location")
     private String location;
@@ -61,13 +63,16 @@ public class Restaurant implements Serializable {
     @Column(name = "created at")
     private String createdAt;
     @OneToMany(mappedBy = "restaurantId")
+    @JsonIgnore
     private List<Favorites> favoritesList;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     @ManyToOne
     private User ownerId;
     @OneToMany(mappedBy = "restaurantId")
+    @JsonIgnore
     private List<Category> categoryList;
     @OneToMany(mappedBy = "restaurantId")
+    @JsonIgnore
     private List<Order> orderList;
 
     public Restaurant() {
@@ -85,12 +90,12 @@ public class Restaurant implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getRestaurantName() {
+        return restaurantName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRestaurantName(String name) {
+        this.restaurantName = name;
     }
 
     public String getLocation() {

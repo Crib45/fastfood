@@ -5,6 +5,8 @@
  */
 package com.fastfoodsm.fastfood.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -41,8 +43,8 @@ public class Food implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Size(max = 255)
-    @Column(name = "name")
-    private String name;
+    @Column(name = "foodName")
+    private String foodName;
     @Column(name = "price")
     private Long price;
     @Size(max = 255)
@@ -52,6 +54,7 @@ public class Food implements Serializable {
     @Column(name = "image")
     private String image;
     @OneToMany(mappedBy = "foodId")
+    @JsonIgnore
     private List<FoodOrder> foodOrderList;
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     @ManyToOne
@@ -72,12 +75,12 @@ public class Food implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFoodName() {
+        return foodName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFoodName(String name) {
+        this.foodName = name;
     }
 
     public Long getPrice() {

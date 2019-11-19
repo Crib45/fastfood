@@ -5,6 +5,8 @@
  */
 package com.fastfoodsm.fastfood.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -46,6 +48,7 @@ public class Order implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date date;
     @OneToMany(mappedBy = "orderId")
+    @JsonIgnore
     private List<FoodOrder> foodOrderList;
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
     @ManyToOne
