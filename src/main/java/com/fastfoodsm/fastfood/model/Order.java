@@ -47,6 +47,10 @@ public class Order implements Serializable {
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
+    @Column(name = "notes")
+    private String notes;
+    @Column(name = "status")
+    private String status;
     @OneToMany(mappedBy = "orderId")
     @JsonIgnore
     private List<FoodOrder> foodOrderList;
@@ -59,6 +63,14 @@ public class Order implements Serializable {
 
     public Order() {
     }
+
+    public String getNotes() { return notes; }
+
+    public void setNotes(String notes) { this.notes = notes; }
+
+    public String getStatus() { return status; }
+
+    public void setStatus(String status) { this.status = status; }
 
     public Order(Integer id) {
         this.id = id;

@@ -5,21 +5,12 @@
  */
 package com.fastfoodsm.fastfood.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -66,11 +57,17 @@ public class User implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
     @OneToMany(mappedBy = "userId")
+    @JsonIgnore
     private List<Favorites> favoritesList;
     @OneToMany(mappedBy = "ownerId")
+    @JsonIgnore
     private List<Restaurant> restaurantList;
     @OneToMany(mappedBy = "userId")
+    @JsonIgnore
     private List<Order> orderList;
+    @JoinColumn(name = "employed_at", referencedColumnName = "id")
+    @ManyToOne
+    private Restaurant employedAt;
 
     public User() {
     }
@@ -78,6 +75,11 @@ public class User implements Serializable {
     public User(Integer id) {
         this.id = id;
     }
+
+
+    public Restaurant getEmployedAt() { return employedAt; }
+
+    public void setEmployedAt(Restaurant employedAt) { this.employedAt = employedAt; }
 
     public Integer getId() {
         return id;
@@ -170,12 +172,12 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public List<Order> getOrderEntityList() {
+    public List<Order> getOrderList() {
         return orderList;
     }
 
-    public void setOrderEntityList(List<Order> orderEntityList) {
-        this.orderList = orderEntityList;
+    public void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
     }
 
     @Override

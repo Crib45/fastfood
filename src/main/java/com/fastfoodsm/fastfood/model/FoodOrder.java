@@ -36,6 +36,8 @@ public class FoodOrder implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Column(name = "amount")
+    private Long amount;
     @JoinColumn(name = "food_id", referencedColumnName = "id")
     @ManyToOne
     private Food foodId;
@@ -45,6 +47,10 @@ public class FoodOrder implements Serializable {
 
     public FoodOrder() {
     }
+
+    public Long getAmount() { return amount; }
+
+    public void setAmount(Long amount) { this.amount = amount; }
 
     public FoodOrder(Integer id) {
         this.id = id;
