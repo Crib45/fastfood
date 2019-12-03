@@ -36,7 +36,7 @@ public class Favorites implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
     @Size(max = 255)
     @Column(name = "notes")
     private String notes;
@@ -53,15 +53,15 @@ public class Favorites implements Serializable {
     public Favorites() {
     }
 
-    public Favorites(Integer id) {
+    public Favorites(Long id) {
         this.id = id;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

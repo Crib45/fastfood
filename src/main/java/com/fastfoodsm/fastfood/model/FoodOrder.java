@@ -35,7 +35,7 @@ public class FoodOrder implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
     @Column(name = "amount")
     private Long amount;
     @JoinColumn(name = "food_id", referencedColumnName = "id")
@@ -52,15 +52,15 @@ public class FoodOrder implements Serializable {
 
     public void setAmount(Long amount) { this.amount = amount; }
 
-    public FoodOrder(Integer id) {
+    public FoodOrder(Long id) {
         this.id = id;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -41,7 +41,7 @@ public class Restaurant implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
     @Size(max = 255)
     @Column(name = "restaurantName")
     private String restaurantName;
@@ -51,8 +51,8 @@ public class Restaurant implements Serializable {
     @Column(name = "phone")
     private Long phone;
     @Size(max = 255)
-    @Column(name = "description")
-    private String description;
+    @Column(name = "restaurant_description")
+    private String restauranDescription;
     @Size(max = 255)
     @Column(name = "hours_start")
     private String hoursStart;
@@ -60,7 +60,7 @@ public class Restaurant implements Serializable {
     @Column(name = "hours_end")
     private String hoursEnd;
     @Size(max = 255)
-    @Column(name = "created at")
+    @Column(name = "created_at")
     private String createdAt;
     @OneToMany(mappedBy = "restaurantId")
     @JsonIgnore
@@ -78,16 +78,24 @@ public class Restaurant implements Serializable {
     public Restaurant() {
     }
 
-    public Restaurant(Integer id) {
+    public Restaurant(Long id) {
         this.id = id;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getRestauranDescription() {
+        return restauranDescription;
+    }
+
+    public void setRestauranDescription(String restauranDescription) {
+        this.restauranDescription = restauranDescription;
     }
 
     public String getRestaurantName() {
@@ -112,14 +120,6 @@ public class Restaurant implements Serializable {
 
     public void setPhone(Long phone) {
         this.phone = phone;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getHoursStart() {
@@ -163,22 +163,31 @@ public class Restaurant implements Serializable {
         this.ownerId = ownerId;
     }
 
-    @XmlTransient
-    public List<Category> getCategoryList() {
-        return categoryList;
-    }
+//    @XmlTransient
+//    public List<Category> getCategoryList() {
+//        return categoryList;
+//    }
+//
+//    public void setCategoryList(List<Category> categoryList) {
+//        this.categoryList = categoryList;
+//    }
+//
+//    @XmlTransient
+//    public List<Order> getOrderEntityList() {
+//        return orderList;
+//    }
+//
+//    public void setOrderEntityList(List<Order> orderList) {
+//        this.orderList = orderList;
+//    }
 
-    public void setCategoryList(List<Category> categoryList) {
-        this.categoryList = categoryList;
-    }
 
-    @XmlTransient
-    public List<Order> getOrderEntityList() {
+    public List<Order> getOrderList() {
         return orderList;
     }
 
-    public void setOrderEntityList(List<Order> orderEntityList) {
-        this.orderList = orderEntityList;
+    public void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
     }
 
     @Override

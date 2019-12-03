@@ -31,7 +31,7 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
     @Size(max = 255)
     @Column(name = "first_name")
     private String firstName;
@@ -72,7 +72,7 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(Integer id) {
+    public User(Long id) {
         this.id = id;
     }
 
@@ -81,11 +81,11 @@ public class User implements Serializable {
 
     public void setEmployedAt(Restaurant employedAt) { this.employedAt = employedAt; }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
