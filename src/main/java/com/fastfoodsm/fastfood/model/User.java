@@ -69,6 +69,8 @@ public class User implements Serializable {
     @JoinColumn(name = "employed_at", referencedColumnName = "id")
     @ManyToOne
     private Restaurant employedAt;
+    @Column(name = "enabled")
+    private Integer enabled;
 
     public User() {
     }
@@ -77,6 +79,13 @@ public class User implements Serializable {
         this.id = id;
     }
 
+    public Integer getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Integer enabled) {
+        this.enabled = enabled;
+    }
 
     public Restaurant getEmployedAt() { return employedAt; }
 

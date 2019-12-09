@@ -19,7 +19,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         auth
                 .inMemoryAuthentication()
                 .withUser("user")
-                .password("password")
+                .password("{noop}password")
                 .roles("USER");
     }
 
@@ -28,10 +28,8 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
             throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/register").permitAll()
-                .antMatchers("/restaurant").permitAll()
-                .antMatchers("/category/{\\d+}").permitAll()
+                .antMatchers("/login","/register","/restaurant","/category/{\\d+}").permitAll()
+                .antMatchers("/user").authenticated()
                 .anyRequest()
                 .authenticated()
                 .and()

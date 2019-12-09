@@ -26,14 +26,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
  * @author Stefan
  */
 @Entity
 @Table(name = "category")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")})
+        @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")})
 public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,6 +51,10 @@ public class Category implements Serializable {
     @JsonIgnore
     private List<Food> foodList;
 
+    @Size(max = 255)
+    @Column(name = "category_icon")
+    private String categoryIcon;
+
     public Category() {
     }
 
@@ -65,6 +68,14 @@ public class Category implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCategoryIcon() {
+        return categoryIcon;
+    }
+
+    public void setCategoryIcon(String categoryIcon) {
+        this.categoryIcon = categoryIcon;
     }
 
     public String getCategoryName() {
@@ -116,5 +127,5 @@ public class Category implements Serializable {
     public String toString() {
         return "com.fastfoodsm.fastfood.model.Category[ id=" + id + " ]";
     }
-    
+
 }
