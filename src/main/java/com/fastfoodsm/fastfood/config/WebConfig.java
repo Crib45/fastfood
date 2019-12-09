@@ -30,6 +30,8 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/register").permitAll()
+                .antMatchers("/restaurant").permitAll()
+                .antMatchers("/category/{\\d+}").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
