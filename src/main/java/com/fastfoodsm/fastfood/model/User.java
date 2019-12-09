@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -38,7 +39,7 @@ public class User implements Serializable {
     @Size(max = 255)
     @Column(name = "last_name")
     private String lastName;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    //@Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 255)
     @Column(name = "email")
     private String email;
@@ -202,7 +203,20 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "com.fastfoodsm.fastfood.model.Users[ id=" + id + " ]";
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phone=" + phone +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                ", createdAt=" + createdAt +
+                ", favoritesList=" + favoritesList +
+                ", restaurantList=" + restaurantList +
+                ", orderList=" + orderList +
+                ", employedAt=" + employedAt +
+                '}';
     }
-    
 }
