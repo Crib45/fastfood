@@ -33,6 +33,11 @@ public class UserController {
                 .decode(authToken)).split(":")[0];
     }
 
+    @RequestMapping("/profile")
+    public ResponseEntity profile(HttpServletRequest request) {
+        return ResponseEntity.ok(userService.profile(request));
+    }
+
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void logout(HttpSession session) {
