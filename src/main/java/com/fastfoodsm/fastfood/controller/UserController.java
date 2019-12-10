@@ -29,11 +29,12 @@ public class UserController {
     public Principal user(HttpServletRequest request) {
         String authToken = request.getHeader("Authorization")
                 .substring("Basic".length()).trim();
+        System.out.println(authToken);
         return () ->  new String(Base64.getDecoder()
                 .decode(authToken)).split(":")[0];
     }
 
-    @RequestMapping("/profile")
+    @GetMapping("/profile")
     public ResponseEntity profile(HttpServletRequest request) {
         return ResponseEntity.ok(userService.profile(request));
     }
