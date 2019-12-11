@@ -8,4 +8,5 @@ import javax.servlet.http.HttpServletRequest;
 public interface UserService {
     String createUser(User user);
     User profile(HttpServletRequest request);
+    User getByUsername(String username);
 }
