@@ -44,13 +44,14 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
             throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/login","/register","/restaurant","/category/{\\d+}").permitAll()
                 .antMatchers("/user","/profile").authenticated()
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic();
+                .httpBasic()
+                .and().cors();
     }
 
     @Bean
@@ -60,7 +61,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH")
-                        .allowedHeaders("Access-Control-Allow-Origin", "Authorization", "content-type")
+                        .allowedHeaders("*")
                         .allowedOrigins("*");
             }
         };
