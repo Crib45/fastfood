@@ -23,7 +23,7 @@ public class FoodController {
         return ResponseEntity.ok(foodService.getById(id));
     }
 
-    @GetMapping("/getAllByCategory/{idCategory}")
+    @GetMapping("/getAllByIdCategory/{idCategory}")
     public ResponseEntity getAllByCategory(@PathVariable Long idCategory) {
         return ResponseEntity.ok(foodService.getAllByCategory(idCategory));
     }

@@ -31,12 +31,9 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
         auth.jdbcAuthentication().dataSource(config.dbDataSource()).passwordEncoder(passwordEncoder())
-                .usersByUsernameQuery("select username, password, enabled"
-                + " from user where username=?").authoritiesByUsernameQuery("select role from user where username=?");
-//                .inMemoryAuthentication()
-//                .withUser("user")
-//                .password("{noop}password")
-//                .roles("USER");
+                .usersByUsernameQuery("select username, password"
+                        + " from user where username=?");
+//                .authoritiesByUsernameQuery("select role from user where username=?");
     }
 
     @Override
@@ -45,8 +42,9 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/login","/register","/restaurant","/category/{\\d+}").permitAll()
-                .antMatchers("/user","/profile").authenticated()
+//                .antMatchers("/login","/register","/restaurant","/category/{\\d+}").permitAll()
+                .antMatchers("/user", "/profile").authenticated()
+                .antMatchers("/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -69,7 +67,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
