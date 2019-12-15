@@ -16,8 +16,13 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
-    @GetMapping("/{idRestaurant}")
+    @GetMapping("/getAllByIdRestaurant/{idRestaurant}")
     public ResponseEntity getAllByIdRestaurant(@PathVariable Long idRestaurant) {
         return ResponseEntity.ok(categoryService.getAllByIdRestaurant(idRestaurant));
+    }
+
+    @GetMapping("/{idCategory}")
+    public ResponseEntity getById(@PathVariable Long idCategory) {
+        return ResponseEntity.ok(categoryService.getById(idCategory));
     }
 }

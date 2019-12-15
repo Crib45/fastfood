@@ -24,4 +24,9 @@ public class CategoryServiceImpl implements CategoryService {
         Restaurant restaurant = restaurantRepository.findById(idRestaurant).get();
         return categoryRepository.findAllByRestaurantId(restaurant);
     }
+
+    @Override
+    public Category getById(Long idCategory) {
+        return categoryRepository.findById(idCategory).orElse(null);
+    }
 }

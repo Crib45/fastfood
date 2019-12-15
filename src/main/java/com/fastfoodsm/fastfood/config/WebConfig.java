@@ -43,13 +43,10 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 //                .antMatchers("/login","/register","/restaurant","/category/{\\d+}").permitAll()
-                .antMatchers("/user", "/profile").authenticated()
+//                .antMatchers("/user", "/profile").authenticated()
                 .antMatchers("/**").permitAll()
                 .anyRequest()
-                .authenticated()
-                .and()
-                .httpBasic()
-                .and().cors();
+                .authenticated();
     }
 
     @Bean
@@ -58,7 +55,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH")
+                        .allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH","OPTIONS")
                         .allowedHeaders("*")
                         .allowedOrigins("*");
             }
