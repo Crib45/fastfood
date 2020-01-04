@@ -47,7 +47,7 @@ public class Food implements Serializable {
     private String foodName;
     @Column(name = "price")
     private Long price;
-    @Size(max = 255)
+    @Size(max = 512)
     @Column(name = "description")
     private String description;
     @Size(max = 255)

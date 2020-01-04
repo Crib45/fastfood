@@ -1,6 +1,7 @@
 package com.fastfoodsm.fastfood.service;
 
 import com.fastfoodsm.fastfood.model.Restaurant;
+import com.fastfoodsm.fastfood.model.User;
 import com.fastfoodsm.fastfood.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,5 +26,10 @@ public class RestaurantServiceImpl implements RestaurantService{
     public String delete(Restaurant restaurant) {
         restaurantRepository.delete(restaurant);
         return "Success";
+    }
+
+    @Override
+    public List<Restaurant> getByUser(User user) {
+        return restaurantRepository.findAllByOwnerId(user);
     }
 }
