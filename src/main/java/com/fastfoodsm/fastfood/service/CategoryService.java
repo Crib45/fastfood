@@ -8,4 +8,6 @@ import java.util.List;
 public interface CategoryService {
     List<Category> getAllByIdRestaurant(Long idRestaurant);
     Category getById(Long idCategory);
+    String deleteById(Long idCategory);
+
 }

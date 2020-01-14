@@ -1,6 +1,7 @@
 package com.fastfoodsm.fastfood.controller;
 
 import com.fastfoodsm.fastfood.model.Restaurant;
+import com.fastfoodsm.fastfood.model.User;
 import com.fastfoodsm.fastfood.service.RestaurantService;
 import com.fastfoodsm.fastfood.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,20 @@ public class RestaurantController {
       return  ResponseEntity.ok(restaurantService.save(restaurant));
     }
 
-    @GetMapping("/getAllByUser")
-    public ResponseEntity getAllByUser(HttpServletRequest request){
-        return ResponseEntity.ok(restaurantService.getByUser(userService.profile(request)));
+    @GetMapping("/getAllOwnedByUser")
+    public ResponseEntity getAllOwnedByUser(HttpServletRequest request){
+        User user = userService.profile(request);
+       return ResponseEntity.ok(restaurantService.getByUser(user));
+    }
+
+    @GetMapping("/getByEmployee")
+    public ResponseEntity getByEmployee(HttpServletRequest request){
+        User user = userService.profile(request);
+        return ResponseEntity.ok(restaurantService.getByEmployee(user));
+    }
+
+    @GetMapping("/{idRestaurant}")
+    public ResponseEntity getById(@PathVariable Long idRestaurant){
+        return ResponseEntity.ok(restaurantService.getById(idRestaurant));
     }
 }

@@ -6,6 +6,8 @@
 package com.fastfoodsm.fastfood.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fastfoodsm.fastfood.model.customTypes.StatusType;
+import jdk.net.SocketFlow;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -50,7 +52,7 @@ public class Order implements Serializable {
     @Column(name = "notes")
     private String notes;
     @Column(name = "status")
-    private String status;
+    private StatusType status;
     @OneToMany(mappedBy = "orderId")
     @JsonIgnore
     private List<FoodOrder> foodOrderList;
@@ -68,9 +70,9 @@ public class Order implements Serializable {
 
     public void setNotes(String notes) { this.notes = notes; }
 
-    public String getStatus() { return status; }
+    public StatusType getStatus() { return status; }
 
-    public void setStatus(String status) { this.status = status; }
+    public void setStatus(StatusType status) { this.status = status; }
 
     public Order(Long id) {
         this.id = id;

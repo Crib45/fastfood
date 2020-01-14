@@ -1,6 +1,7 @@
 package com.fastfoodsm.fastfood.service;
 
 import com.fastfoodsm.fastfood.model.Order;
+import com.fastfoodsm.fastfood.model.customTypes.StatusType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -14,4 +15,6 @@ public interface OrderService {
     String deleteById(Long id);
 
     String save(Order order);
+
+    List<Order> getOrderByIdRestaurantAndStatus(Long idRestaurant, StatusType statusType);
 }

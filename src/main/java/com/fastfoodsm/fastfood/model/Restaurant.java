@@ -98,6 +98,7 @@ public class Restaurant implements Serializable {
         this.restauranDescription = restauranDescription;
     }
 
+
     public String getRestaurantName() {
         return restaurantName;
     }

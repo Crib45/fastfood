@@ -32,4 +32,14 @@ public class RestaurantServiceImpl implements RestaurantService{
     public List<Restaurant> getByUser(User user) {
         return restaurantRepository.findAllByOwnerId(user);
     }
+
+    @Override
+    public Restaurant getByEmployee(User user) {
+        return user.getEmployedAt();
+    }
+
+    @Override
+    public Restaurant getById(Long id) {
+        return restaurantRepository.findById(id).orElse(null);
+    }
 }

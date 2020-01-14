@@ -29,4 +29,10 @@ public class CategoryServiceImpl implements CategoryService {
     public Category getById(Long idCategory) {
         return categoryRepository.findById(idCategory).orElse(null);
     }
+
+    @Override
+    public String deleteById(Long idCategory) {
+        categoryRepository.deleteById(idCategory);
+        return "Success";
+    }
 }
