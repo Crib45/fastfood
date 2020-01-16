@@ -35,4 +35,10 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.deleteById(idCategory);
         return "Success";
     }
+
+    @Override
+    public String save(Category category) {
+        categoryRepository.save(category);
+        return "Success";
+    }
 }

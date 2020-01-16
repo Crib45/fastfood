@@ -9,5 +9,5 @@ public interface CategoryService {
     List<Category> getAllByIdRestaurant(Long idRestaurant);
     Category getById(Long idCategory);
     String deleteById(Long idCategory);
-
+    String save(Category category);
 }

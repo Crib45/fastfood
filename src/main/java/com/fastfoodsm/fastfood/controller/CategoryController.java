@@ -27,4 +27,9 @@ public class CategoryController {
     public ResponseEntity deleteById(@PathVariable Long idCategory){
         return ResponseEntity.ok(categoryService.deleteById(idCategory));
     }
+
+    @PostMapping("/save")
+    public ResponseEntity save(@RequestBody Category category){
+        return ResponseEntity.ok(categoryService.save(category));
+    }
 }
