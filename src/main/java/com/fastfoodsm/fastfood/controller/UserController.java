@@ -63,4 +63,19 @@ public class UserController {
     public ResponseEntity saveUser(@RequestBody User user){
         return ResponseEntity.ok(userService.save(user));
     }
+
+    @GetMapping("/getAllUsersEmployedBy/{idRestaurant}")
+    public ResponseEntity getAllUsersEmployedBy(@PathVariable Long idRestaurant){
+        return ResponseEntity.ok(userService.getAllByEmployedAt(idRestaurant));
+    }
+
+    @PostMapping("/removeUserEmployedAt")
+    public ResponseEntity removeUserEmployedAt(@RequestBody User user){
+        return ResponseEntity.ok(userService.removeEmployedAt(user));
+    }
+
+    @PostMapping("/addUserEmployedAt/{idRestaurant}")
+    public ResponseEntity addUserEmployedAt(@RequestBody String email, @PathVariable Long idRestaurant){
+        return ResponseEntity.ok(userService.addEmployedAt(email,idRestaurant));
+    }
 }
