@@ -34,10 +34,10 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Stefan
  */
 @Entity
-@Table(name = "order")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Order.findAll", query = "SELECT o FROM Order o")})
+@Table(name = "orders")
+//@XmlRootElement
+//@NamedQueries({
+//    @NamedQuery(name = "Order.findAll", query = "SELECT o FROM Order o")})
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,13 +46,12 @@ public class Order implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Column(name = "date")
-    @Temporal(TemporalType.DATE)
-    private Date date;
-    @Column(name = "notes")
-    private String notes;
-    @Column(name = "status")
-    private StatusType status;
+    @Column(name = "notesOrder")
+    private String notesOrder;
+    @Column(name = "statusOrder")
+    private String statusOrder;
+    @Column(name = "dateOfOrder")
+    private Date dateOfOrder;
     @OneToMany(mappedBy = "orderId")
     @JsonIgnore
     private List<FoodOrder> foodOrderList;
@@ -66,13 +65,13 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public String getNotes() { return notes; }
+    public String getNotesOrder() { return notesOrder; }
 
-    public void setNotes(String notes) { this.notes = notes; }
+    public void setNotesOrder(String notesOrder) { this.notesOrder = notesOrder; }
 
-    public StatusType getStatus() { return status; }
+    public String getStatusOrder() { return statusOrder; }
 
-    public void setStatus(StatusType status) { this.status = status; }
+    public void setStatusOrder(String statusOrder) { this.statusOrder = statusOrder; }
 
     public Order(Long id) {
         this.id = id;
@@ -86,12 +85,12 @@ public class Order implements Serializable {
         this.id = id;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getDateOfOrder() {
+        return dateOfOrder;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDateOfOrder(Date dateOfOrder) {
+        this.dateOfOrder = dateOfOrder;
     }
 
     @XmlTransient
@@ -133,15 +132,18 @@ public class Order implements Serializable {
             return false;
         }
         Order other = (Order) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
-        return "com.fastfoodsm.fastfood.model.OrderEntity[ id=" + id + " ]";
+        return "Order{" +
+                "id=" + id +
+                ", notesOrder='" + notesOrder + '\'' +
+                ", statusOrder='" + statusOrder + '\'' +
+                ", foodOrderList=" + foodOrderList +
+                ", restaurantId=" + restaurantId +
+                ", userId=" + userId +
+                '}';
     }
-    
 }

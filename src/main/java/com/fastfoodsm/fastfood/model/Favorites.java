@@ -37,12 +37,6 @@ public class Favorites implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Size(max = 255)
-    @Column(name = "notes")
-    private String notes;
-    @Size(max = 255)
-    @Column(name = "created at")
-    private String createdAt;
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
     @ManyToOne
     private Restaurant restaurantId;
@@ -65,21 +59,6 @@ public class Favorites implements Serializable {
         this.id = id;
     }
 
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
 
     public Restaurant getRestaurantId() {
         return restaurantId;

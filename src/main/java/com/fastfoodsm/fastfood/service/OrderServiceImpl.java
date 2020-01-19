@@ -41,14 +41,14 @@ public class OrderServiceImpl implements  OrderService{
     }
 
     @Override
-    public String save(Order order) {
+    public Order save(Order order) {
         orderRepository.save(order);
-        return "Success";
+        return order;
     }
 
     @Override
-    public List<Order> getOrderByIdRestaurantAndStatus(Long idRestaurant, StatusType statusType) {
+    public List<Order> getOrderByIdRestaurantAndStatus(Long idRestaurant, String statusOrder) {
         Restaurant restaurant = restaurantRepository.findById(idRestaurant).orElse(null);
-        return orderRepository.findAllByRestaurantIdAndStatus(restaurant, statusType);
+        return orderRepository.findAllByRestaurantIdAndStatusOrder(restaurant, statusOrder);
     }
 }

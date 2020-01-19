@@ -1,7 +1,9 @@
 package com.fastfoodsm.fastfood.controller;
 
 
+import com.fastfoodsm.fastfood.model.Favorites;
 import com.fastfoodsm.fastfood.model.User;
+import com.fastfoodsm.fastfood.service.FavoritesService;
 import com.fastfoodsm.fastfood.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,9 @@ public class UserController {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    FavoritesService favoritesService;
 
     @RequestMapping("/login")
     public boolean login(@RequestBody User user) {
@@ -60,22 +65,39 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity saveUser(@RequestBody User user){
+    public ResponseEntity saveUser(@RequestBody User user) {
         return ResponseEntity.ok(userService.save(user));
     }
 
     @GetMapping("/getAllUsersEmployedBy/{idRestaurant}")
-    public ResponseEntity getAllUsersEmployedBy(@PathVariable Long idRestaurant){
+    public ResponseEntity getAllUsersEmployedBy(@PathVariable Long idRestaurant) {
         return ResponseEntity.ok(userService.getAllByEmployedAt(idRestaurant));
     }
 
     @PostMapping("/removeUserEmployedAt")
-    public ResponseEntity removeUserEmployedAt(@RequestBody User user){
+    public ResponseEntity removeUserEmployedAt(@RequestBody User user) {
         return ResponseEntity.ok(userService.removeEmployedAt(user));
     }
 
     @PostMapping("/addUserEmployedAt/{idRestaurant}")
-    public ResponseEntity addUserEmployedAt(@RequestBody String email, @PathVariable Long idRestaurant){
-        return ResponseEntity.ok(userService.addEmployedAt(email,idRestaurant));
+    public ResponseEntity addUserEmployedAt(@RequestBody String email, @PathVariable Long idRestaurant) {
+        return ResponseEntity.ok(userService.addEmployedAt(email, idRestaurant));
+    }
+
+    @GetMapping("/addToFavorites/{idRestaurant}")
+    public ResponseEntity addToFavorites(@PathVariable Long idRestaurant, HttpServletRequest request) {
+        User user = userService.profile(request);
+        return ResponseEntity.ok(favoritesService.save(idRestaurant, user));
+    }
+
+    @GetMapping("/getFavorites")
+    public ResponseEntity getFavorites(HttpServletRequest request) {
+        User user = userService.profile(request);
+        return ResponseEntity.ok(favoritesService.getAllByUser(user));
+    }
+
+    @DeleteMapping("/deleteFavorite/{favoriteId}")
+    public ResponseEntity deleteFavorite(@PathVariable Long favoriteId){
+        return ResponseEntity.ok(favoritesService.delete(favoriteId));
     }
 }

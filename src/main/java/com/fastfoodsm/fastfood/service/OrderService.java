@@ -14,7 +14,7 @@ public interface OrderService {
 
     String deleteById(Long id);
 
-    String save(Order order);
+    Order save(Order order);
 
-    List<Order> getOrderByIdRestaurantAndStatus(Long idRestaurant, StatusType statusType);
+    List<Order> getOrderByIdRestaurantAndStatus(Long idRestaurant, String statusOrder);
 }
