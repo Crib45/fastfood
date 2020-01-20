@@ -57,4 +57,10 @@ public class OrderController {
     public ResponseEntity saveFoodOrder(@RequestBody FoodOrder foodOrder) {
         return ResponseEntity.ok(foodOrderService.save(foodOrder));
     }
+
+    @PostMapping("/saveChange")
+    public ResponseEntity saveChange(@RequestBody Order order){
+        System.out.println(order);
+        return ResponseEntity.ok(orderService.save(order));
+    }
 }
