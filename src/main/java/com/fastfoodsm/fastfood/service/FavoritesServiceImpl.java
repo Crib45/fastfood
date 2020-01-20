@@ -37,7 +37,8 @@ public class FavoritesServiceImpl implements FavoritesService {
 
     @Override
     public String delete(Long favoriteId) {
-        favoritesRepository.delete(Objects.requireNonNull(favoritesRepository.findById(favoriteId).orElse(null)));
+        favoritesRepository.delete(Objects.requireNonNull(favoritesRepository.findById(favoriteId)
+                .orElse(null)));
         return "Success";
     }
 }
